@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="keywords" content="分享-下载">
+    <meta name="description" content="分享站">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="theme-color" content="#4d545d">
+    <meta name="author" content="Ganlv">
+    <meta name="license" content="MIT License">
+    <meta name="repository" content="http://192.168.1.246">
+    <title>分享站</title>
+    <link rel="icon" href="http://192.168.1.2/favicon.ico">
+    <script>
+  window.__listData = null;
+  window.__jsonpCallbackDown52PojieCn = function(data) {
+    var children = (data && data.children) ? data.children : [];
+    children.forEach(function(file) {
+      // 补全字段，跟之前一样
+      file.isDir = !!(file.children && Array.isArray(file.children));
+      file.path = '/' + file.name;
+      if (!file.isDir) {
+        file.fullUrl = '/uploads/' + encodeURIComponent(file.name);
+        var size = file.size || 0;
+        if (size < 1024) file.sizeReadable = size + ' B';
+        else if (size < 1048576) file.sizeReadable = (size / 1024).toFixed(1) + ' KB';
+        else if (size < 1073741824) file.sizeReadable = (size / 1048576).toFixed(1) + ' MB';
+        else file.sizeReadable = (size / 1073741824).toFixed(2) + ' GB';
+        var d = new Date((file.time || 0) * 1000);
+        file.timeForHuman = d.toLocaleDateString() + ' ' + d.toLocaleTimeString();
+        var diff = Date.now() / 1000 - (file.time || Date.now() / 1000);
+        if (diff < 60) file.timeFromNowForHuman = '刚刚';
+        else if (diff < 3600) file.timeFromNowForHuman = Math.floor(diff / 60) + ' 分钟前';
+        else if (diff < 86400) file.timeFromNowForHuman = Math.floor(diff / 3600) + ' 小时前';
+        else file.timeFromNowForHuman = Math.floor(diff / 86400) + ' 天前';
+      }
+    });
+    window.__listData = { children: children };
+    // 如果 Vue 已经挂载，直接更新
+    if (window.__appVm) {
+      window.__appVm.files = children;
+      window.__appVm.currentFile.children = children;
+    }
+  };
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark no-select">
+        <div class="container">
+            <a class="navbar-brand" href="http://192.168.1.2/">返回软件下载基地</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+           <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://192.168.1.2/">首页</a>
+                    </li> 
+                    <li class="nav-item dropdown">
+			<a href="/upload.html" style="display:inline-block;padding:8px 16px;background:#2196F3;color:white;text-decoration:none;border-radius:4px;margin:10px 20px;font-size:14px;">
+			📤 上传文件
+			</a>
+                    </li>
+                </ul>
+            </div>-->
+        </div>
+    </nav>
+    <noscript>
+        <style>
+            .navbar-collapse {
+                display: block !important;
+            }
+        </style>
+        <div class="container">
+            <div class="alert alert-danger">
+                <strong>非常抱歉：如果您的浏览器不启用 javascript，页面可能无法正常使用，请在浏览器设置中启用 javascript。</strong>
+            </div>
+        </div>
+    </noscript>
+    <div class="container">
+        <div id="app"></div>
+        <div id="main">
+            <h1 class="current-path">根目录</h1>
+        </div>
+    </div>
+    <div class="footer">
+        <p class="copyright">
+            <span>Copyright &copy;</span>
+            <span>Fao版权所有</span>
+            <span></span>
+        </p>
+    </div>
+    <script>
+        (function () {
+            var ths = document.querySelectorAll('th');
+            for (var i = 0; i < ths.length; ++i) {
+                ths[i].style.width = '';
+            }
+            window.addEventListener('DOMContentLoaded', function () {
+                window.down52PojieCn = new Down52PojieCn({});
+            });
+        })();
+    </script>
+    <script>
+        var _hmt = _hmt || [];
+        !function() {
+            var e = document.createElement("script");
+            e.src = "https://hm.baidu.com/hm.js?184eff22954ad7cfcc66ada4f57f66e4";
+            var t = document.getElementsByTagName("script")[0];
+            t.parentNode.insertBefore(e, t)
+        }();
+    </script>
+</body>
+</html>
